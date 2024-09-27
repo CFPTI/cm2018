@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+body {
+    width: 100%;
+    background-color: rgb(192, 192, 192);
+    background-image: url("../img/fond.png");
+}
+
+h1 {
+    margin-top: 10px;
+    text-shadow: 0 4px 0 #00ecff, 0 -4px 0 #ff4045;
+    font-family: 'Russo One', sans-serif;
+    text-align: center;
+    font-size: 60px;
+}
+
+header>p {
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Russo One', sans-serif;
+}
+
+p {
+    text-align: center;
+    font-size: 40px;
+    font-family: 'Russo One', sans-serif;
+}
+
+select {
+    width: 135px;
+    height: 30px;
+    text-align: center;
+    font-size: large;
+    font-family: 'Russo One', sans-serif;
+}
+
+main {
+    border-radius: 10px;
+    background-color: rgb(207, 207, 207);
+    height: 100%;
+    width: 70%;
+    margin: auto;
+    padding: 2%;
+    text-align: center;
+    box-shadow: 5px 5px 5px rgb(43, 43, 43);
+}
+
+td {
+    text-align: center;
+    border: 3px solid black;
+    border-radius: 5px;
+    padding: 1%;
+    font-family: 'Russo One', sans-serif;
+    background-color: rgb(180, 180, 180);
+}
+
+table {
+    width: 90%;
+    margin: auto;
+    border-spacing: 15px;
+}
+
+button {
+    display: inherit;
+    width: 90%;
+    margin: auto;
+    height: 40px;
+    background: rgb(255, 255, 255);
+    border: none;
+    border-radius: 50px;
+    box-shadow: 2px 2px 2px rgb(133, 133, 133);
+    font-family: 'Russo One', sans-serif;
+    font-size: large;
+}
+
+button:hover {
+    background-color: green;
+    color: white;
+}
+
+.selected {
+    background-color: white;
+    color: rgb(0, 0, 0);
+}
+
+.pris {
+    background-image: url('../img/rayures.jpg');
+    background-color: rgb(70, 70, 70);
+    color: grey;
+}
+
+.listeRDV {
+    text-decoration: none;
+    color: black;
+    font-family: 'Russo One', sans-serif;
+    padding: 1%;
+    border-radius: 50px;
+    background-color: white;
+    box-shadow: 1px 1px 1px rgb(180, 180, 180);
+}
+
+.back {
+    background-color: rgb(255, 255, 255);
+    font-family: 'Russo One', sans-serif;
+    margin-top: 1%;
+    margin: 10px;
+    padding: 1%;
+    border-radius: 50px;
+    box-shadow: 1px 1px 1px rgb(180, 180, 180);
+    text-decoration: none;
+    color: black;
+}
+
+.logo {
+    top: 2%;
+    position: absolute;
+}
+.erreur{
+    color: red;
+}

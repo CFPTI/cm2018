@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 
 namespace WFLostNFurious
 {
+    // Class JSONParser
     public class JSONParser
     {
         private Dictionary<string, string> dictionary;

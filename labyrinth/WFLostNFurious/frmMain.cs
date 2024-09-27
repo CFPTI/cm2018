@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*modifieur: David Vieira Luis (il abuse) / Gabriel Bonetti
+ *projet: labyrinte (escape room)
+ * but: modifier le code du labyrinte créer en 2018
+ * date: 13/09/2021 / ???
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,10 +24,12 @@ using System.Xml.Serialization;
 
 namespace WFLostNFurious
 {
+
     public partial class frmMain : Form
     {
-        const string SERVER_ADDRESS = "http://192.168.123.242";
-        const string GAME_INFO_FILE_PATH = "gameInfos.json";
+
+        const string SERVER_ADDRESS = "http://127.0.0.1";
+        const string GAME_INFO_FILE_PATH = "solution.json";
         //Propriete
         enum Direction { Haut, Bas, Gauche, Droite };
 
@@ -30,6 +37,7 @@ namespace WFLostNFurious
         Personnage personnageRaichu;    //Personnage du jeu
         List<Bloc> lstLabyrinthe;       //Liste de tous les blocs du labyrithe
         List<string> lstInstruction;    //Liste de toutes les instructions
+        DbConnect ConnectionDB = new DbConnect();
 
         //Champs
         public string CodeAAfficher { get => codeAAfficher; set => codeAAfficher = value; }
@@ -40,30 +48,42 @@ namespace WFLostNFurious
         //Constructeur
         public frmMain()
         {
+
             InitializeComponent();
             DoubleBuffered = true;
-
+            //on crée le personnage raichu avec la classe Personnage
+            // et on doit rentrer en valeur 
             PersonnageRaichu = new Personnage(new PointF(0, 0), (int)Direction.Haut);
             LstLabyrinthe = new List<Bloc>();
             LstInstruction = new List<string>();
-            SeparerCode();
+            //
+            //  SeparerCode();
             tmrCheckStatus.Enabled = true;
+
+
+
+
+
         }
 
         /// <summary>
         /// Sépare le code recu pour ne garder que le code de fin
         /// </summary>
+        /// 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public void SeparerCode()
         {
             try
             {
-                string jsonReceived = Jeu.RecevoirInfos(SERVER_ADDRESS + "/webdispatcher/soluce.php");
+                //string jsonReceived = Jeu.RecevoirInfos(/*SERVER_ADDRESS + "/webdispatcher/soluce.php"*/);
+                string jsonReceived = Jeu.RecevoirInfos(/*SERVER_ADDRESS + "/webdispatcher/soluce.php"*/);
 
                 JSONParser jsonData = new JSONParser(jsonReceived);
 
                 WriteGameInfosData(jsonReceived);
 
-                this.CodeAAfficher = jsonData.GetValue("soluce2");
+                this.CodeAAfficher = jsonData.GetValue("en2");
             }
             catch (Exception)
             {
@@ -81,20 +101,28 @@ namespace WFLostNFurious
         /// <param name="matriceLabyrinthe">Schema du labyrinthe</param>
         public void CreateLabFromGrid(int[][] matriceLabyrinthe)
         {
+            //pour chaque case du labyrinthe on fait à chaque fois
             for (int i = 0; i < matriceLabyrinthe.Length; i++)
             {
+                //donc la y prend pour valeur le  premier carré on lui multiplie la taille du bloc dans la classe jeu et on lui rajoute la position en y du labyrinthe
                 int y = (i + 1) * Jeu.TAILLE_BLOC_Y + Jeu.POSITION_LABYRINTHE_Y;
+                //donc la pour chaque tableau dans matriceLabyrinthe (grace au [i]) 
                 for (int j = 0; j < matriceLabyrinthe[i].Length; j++)
                 {
+                    // pour chaque carré dans le tableau into tableau on lui multiplie la taille en x du bloc et on lui donne la position du labyrinthe
                     int x = (j + 1) * Jeu.TAILLE_BLOC_X + Jeu.POSITION_LABYRINTHE_X;
-                    if (matriceLabyrinthe[i][j] == Jeu.ID_MUR)  //Si c'est un mur
+                    //DONC si j'ai bien compris si le i et y du bloc = a 1 ca veut donc dire que c'est un mur
+                    if (matriceLabyrinthe[i][j] == Jeu.ID_MUR)  //Si c'est un mur que l'id vaut 1
                     {
+                        //on crée le mur selon la valeur x et y rentré juste avant 
                         CreationMur(x, y);
                     }
+                    //DONC si j'ai bien compris si le i et y du bloc = a 2 ca veut donc dire que c'est une arrivé
                     else if (matriceLabyrinthe[i][j] == Jeu.ID_ARRIVEE) //Si c'est une arrivee
                     {
                         CreationArrivee(x, y);
                     }
+                    //DONC si j'ai bien compris si le i et y du bloc = a 3 ca veut donc dire que c'est le personnage
                     else if (matriceLabyrinthe[i][j] == Jeu.ID_PERSONNAGE)  //Si c'est le personnage
                     {
                         PersonnageRaichu.Position = new PointF(Convert.ToSingle(x), Convert.ToSingle(y));
@@ -147,34 +175,71 @@ namespace WFLostNFurious
         /// </summary>
         private void Gagner()
         {
+
             //Appele page php pour fin partie
-            Jeu.RecevoirInfos(SERVER_ADDRESS + "/webdispatcher/step2.php");
+            Jeu.RecevoirInfos(/*SERVER_ADDRESS + "/webdispatcher/step2.php"*/);
             //Fini la partie
             Jeu.EstEnJeu = false;
             //Le perso n'est plus en mouvement
             Jeu.EstEnMouvement = false;
             //Vide l'interface
-            Controls.Clear();
+            //Controls.Clear();
             Restart();
+            Visible();
             /*
             using (var tw = new StreamWriter("restarted.txt", true))
             {
                 tw.WriteLine("false");
                 tw.Close();
             }
+
+
+
             */
-            //Affiche le code
+            //Affiche le code (Ancien code)
+            /*  Label lblCode = new Label()
+              {
+                  Location = new Point(Jeu.POSITION_CODE_VICTOIRE_X, Jeu.POSITION_CODE_VICTOIRE_Y),
+                  Text = $"Le code est : {CodeAAfficher}",
+                  AutoSize = false,
+                  Size = new Size(this.Width, this.Height),
+                  Font = new Font("Arial", 75),
+                  TextAlign = ContentAlignment.MiddleCenter,
+                  BackColor = Color.Transparent
+              };
+              this.Controls.Add(lblCode);*/
+
+
+
+
+            
             Label lblCode = new Label()
             {
+
                 Location = new Point(Jeu.POSITION_CODE_VICTOIRE_X, Jeu.POSITION_CODE_VICTOIRE_Y),
-                Text = $"Le code est : {CodeAAfficher}",
+                Text = $" {ConnectionDB.Select()}",
                 AutoSize = false,
-                Size = new Size(this.Width, this.Height),
+                Size = new Size(this.Width, 200),
+                Font = new Font("Arial", 150),
+                TextAlign = ContentAlignment.MiddleCenter,
+                BackColor = Color.Transparent,
+                ForeColor = Color.Lime
+            };
+
+            Label lblTextCode = new Label()
+            {
+
+                Location = new Point(Jeu.POSITION_TEXT_VICTOIRE_X, Jeu.POSITION_TEXT_VICTOIRE_Y),
+                Text = $"Ce code vous aidera \n\r pour une énigme",
+                AutoSize = false,
+                Size = new Size(this.Width, 1200),
                 Font = new Font("Arial", 75),
                 TextAlign = ContentAlignment.MiddleCenter,
                 BackColor = Color.Transparent
             };
             this.Controls.Add(lblCode);
+            this.Controls.Add(lblTextCode);
+            //ConnectionDB.Select();
 
         }
 
@@ -218,6 +283,13 @@ namespace WFLostNFurious
             PersonnageRaichu.Respawn();
 
         }
+        
+        private void Visible()
+        {
+            pnlCommandes.Visible = false;
+            pnlInstructions.Visible = false;
+            btnRestart.Visible = true;
+        }
 
         //Methodes de la form
         /// <summary>
@@ -225,6 +297,8 @@ namespace WFLostNFurious
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// 
+        // Quand on appuie sur un bouton(n'importe lequelle) cela va ajouter son texte dans la listbox et si dans la listbox il y a plus que 0 valeur cela active le btnPlay
         private void BtnMouvement_Click(object sender, EventArgs e)
         {
 
@@ -244,6 +318,7 @@ namespace WFLostNFurious
         /// <param name="e"></param>
         private void BtnPlay_Click(object sender, EventArgs e)
         {
+            //ConnectionDB.OpenConnection();
             string cheat = "";
 
             foreach (string s in lbxInstruction.Items)
@@ -393,6 +468,7 @@ namespace WFLostNFurious
         /// <param name="e"></param>
         private void BtnStartGame_Click(object sender, EventArgs e)
         {
+            ConnectionDB.OpenConnection();
             btnStartGame.Visible = false;
             Jeu.EstEnJeu = true;
 
@@ -402,7 +478,18 @@ namespace WFLostNFurious
             //Affiche le labyrinthe
             CreateLabFromGrid(Jeu.MatriceLabyrinthe);
             Jeu.NouvelleArrivee(LstLabyrinthe);
+
         }
+        /* public  void RecupDate()
+         {
+             var DateAndTime = DateTime.Now;
+             var Date = DateAndTime.Date.ToString("dd-MM-yyyy");
+
+             //lbl6.Text = Date;
+
+
+
+         }*/
 
         /// <summary>
         /// Affiche les ellements de la form
@@ -462,37 +549,37 @@ namespace WFLostNFurious
         private void tmrCheckStatus_Tick(object sender, EventArgs e)
         {
 
-            StreamReader file = File.OpenText(GAME_INFO_FILE_PATH);
+           
 
-            string gameInfos = file.ReadToEnd();
+          
 
-            file.Close();
-            file.Dispose();
 
-            JSONParser JSONGameInfos = new JSONParser(gameInfos);
+            /* try
+             {
+                 //on essaye de se connecter à la base de donnée avec l'adresse du serveur dans la variable SERVER_ADDRESS qui se trouve tout en haut
+            string jsonReceived = Jeu.RecevoirInfos(SERVER_ADDRESS + "/webdispatcher/soluce.php");
 
-            try
-            {
-                string jsonReceived = Jeu.RecevoirInfos(SERVER_ADDRESS + "/webdispatcher/soluce.php");
 
-                JSONParser jsonData = new JSONParser(jsonReceived);
+                 string jsonReceived = Jeu.RecevoirInfos(SERVER_ADDRESS + "/webdispatcher/soluce.php");
 
-                string oldIdGame = JSONGameInfos.GetValue("idGame");
-                string receivedIdGame = jsonData.GetValue("idGame");
-                string step1Date = jsonData.GetValue("step1");
-                string step2Date = jsonData.GetValue("step2");
+                 JSONParser jsonData = new JSONParser(jsonReceived);
 
-                if (receivedIdGame != oldIdGame && step1Date == "null" && step2Date == "null")
-                {
-                    WriteGameInfosData(jsonReceived);
+                 string oldIdGame = JSONGameInfos.GetValue("idGame");
+                 string receivedIdGame = jsonData.GetValue("idGame");
+                 string step1Date = jsonData.GetValue("step1");
+                 string step2Date = jsonData.GetValue("step2");
 
-                    Application.Restart();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+                 if (receivedIdGame != oldIdGame && step1Date == "null" && step2Date == "null")
+                 {
+                     WriteGameInfosData(jsonReceived);
+
+                     Application.Restart();
+                 }
+             }
+             catch (Exception ex)
+             {
+                 Console.WriteLine(ex.Message);
+             }*/
         }
 
         private void WriteGameInfosData(string data)
@@ -503,6 +590,16 @@ namespace WFLostNFurious
 
             writer.Close();
             writer.Dispose();
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
         }
     }
 }

@@ -39,7 +39,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnViderListe = new System.Windows.Forms.Button();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnStartGame = new System.Windows.Forms.Button();
             this.pnlInstructions = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -47,6 +46,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tmrCheckStatus = new System.Windows.Forms.Timer(this.components);
+            this.btnStartGame = new System.Windows.Forms.Button();
+            this.btnRestart = new System.Windows.Forms.Button();
             this.pnlCommandes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlInstructions.SuspendLayout();
@@ -110,7 +111,6 @@
             // 
             // tmrAvancer
             // 
-            this.tmrAvancer.Interval = 500;
             this.tmrAvancer.Tick += new System.EventHandler(this.TmrAvancer_Tick);
             // 
             // btnReset
@@ -137,7 +137,7 @@
             this.pnlCommandes.Dock = System.Windows.Forms.DockStyle.Right;
             this.pnlCommandes.Location = new System.Drawing.Point(1497, 0);
             this.pnlCommandes.Name = "pnlCommandes";
-            this.pnlCommandes.Size = new System.Drawing.Size(423, 1080);
+            this.pnlCommandes.Size = new System.Drawing.Size(423, 1070);
             this.pnlCommandes.TabIndex = 9;
             this.pnlCommandes.Visible = false;
             // 
@@ -168,17 +168,6 @@
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.fichierToolStripMenuItem.Text = "Fichier";
-            // 
-            // btnStartGame
-            // 
-            this.btnStartGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.btnStartGame.Location = new System.Drawing.Point(665, 269);
-            this.btnStartGame.Name = "btnStartGame";
-            this.btnStartGame.Size = new System.Drawing.Size(561, 520);
-            this.btnStartGame.TabIndex = 10;
-            this.btnStartGame.Text = "Commencer";
-            this.btnStartGame.UseVisualStyleBackColor = true;
-            this.btnStartGame.Click += new System.EventHandler(this.BtnStartGame_Click);
             // 
             // pnlInstructions
             // 
@@ -246,11 +235,40 @@
             this.tmrCheckStatus.Interval = 1000;
             this.tmrCheckStatus.Tick += new System.EventHandler(this.tmrCheckStatus_Tick);
             // 
+            // btnStartGame
+            // 
+            this.btnStartGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.btnStartGame.Location = new System.Drawing.Point(665, 269);
+            this.btnStartGame.Name = "btnStartGame";
+            this.btnStartGame.Size = new System.Drawing.Size(561, 520);
+            this.btnStartGame.TabIndex = 10;
+            this.btnStartGame.Text = "Commencer";
+            this.btnStartGame.UseVisualStyleBackColor = true;
+            this.btnStartGame.Click += new System.EventHandler(this.BtnStartGame_Click);
+            // 
+            // btnRestart
+            // 
+            this.btnRestart.BackColor = System.Drawing.SystemColors.Control;
+            this.btnRestart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnRestart.CausesValidation = false;
+            this.btnRestart.Cursor = System.Windows.Forms.Cursors.Default;
+            this.btnRestart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRestart.ForeColor = System.Drawing.SystemColors.Control;
+            this.btnRestart.Location = new System.Drawing.Point(12, 12);
+            this.btnRestart.Name = "btnRestart";
+            this.btnRestart.Size = new System.Drawing.Size(136, 69);
+            this.btnRestart.TabIndex = 12;
+            this.btnRestart.Text = "restart";
+            this.btnRestart.UseVisualStyleBackColor = false;
+            this.btnRestart.Visible = false;
+            this.btnRestart.Click += new System.EventHandler(this.btnRestart_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.ClientSize = new System.Drawing.Size(1920, 1070);
+            this.Controls.Add(this.btnRestart);
             this.Controls.Add(this.pnlInstructions);
             this.Controls.Add(this.btnStartGame);
             this.Controls.Add(this.pnlCommandes);
@@ -260,6 +278,7 @@
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cité des métiers du 20 au 26 novembre";
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FrmMain_Paint);
             this.pnlCommandes.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -282,7 +301,6 @@
         private System.Windows.Forms.Panel pnlCommandes;
         private System.Windows.Forms.Button btnViderListe;
         private System.Windows.Forms.ToolStripMenuItem fichierToolStripMenuItem;
-        private System.Windows.Forms.Button btnStartGame;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel pnlInstructions;
         private System.Windows.Forms.Label label4;
@@ -291,6 +309,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Timer tmrCheckStatus;
+        private System.Windows.Forms.Button btnStartGame;
+        private System.Windows.Forms.Button btnRestart;
     }
 }
 

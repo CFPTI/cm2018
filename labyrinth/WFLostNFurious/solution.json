@@ -1,0 +1,14 @@
+[
+{"type":"header","version":"4.8.5","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"escapegame_2021"},
+{"type":"table","name":"solution","database":"escapegame_2021","data":
+[
+{"jour":"2021-11-23","en1":"7","en2":"A","en3":"01111010"},
+{"jour":"2021-11-24","en1":"9","en2":"D","en3":"10011101"},
+{"jour":"2021-11-25","en1":"B","en2":"C","en3":"10111100"},
+{"jour":"2021-11-26","en1":"E","en2":"3","en3":"11100011"},
+{"jour":"2021-11-27","en1":"F","en2":"8","en3":"11111000"},
+{"jour":"2021-11-28","en1":"1","en2":"3","en3":"00010011"}
+]
+}
+]

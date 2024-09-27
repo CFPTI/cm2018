@@ -5,11 +5,15 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+
 
 namespace WFLostNFurious
 {
+    
     static class Jeu
     {
+
         //Propriete
         #region const
         public const int ID_MUR = 1;
@@ -26,7 +30,10 @@ namespace WFLostNFurious
         public const int NOMBRE_SORTIES = 3;
         public const int DUREE_UNE_SECONDE_EN_MS = 1000;
         public const int POSITION_CODE_VICTOIRE_X = 0;
-        public const int POSITION_CODE_VICTOIRE_Y = -10;
+        public const int POSITION_CODE_VICTOIRE_Y = 200;
+        public const int POSITION_TEXT_VICTOIRE_X = 0;
+        public const int POSITION_TEXT_VICTOIRE_Y = 100;
+
 
         public const int CODE_MIN = 10;
         public const int CODE_MAX = 50;
@@ -34,7 +41,7 @@ namespace WFLostNFurious
         public const int TAILLE_BLOC_X = 70;
         public const int TAILLE_BLOC_Y = 70;
 
-        public const string CODE_DE_BASE = "F";
+        public const string CODE_DE_BASE = "4";
         #endregion
 
         #region Propriete
@@ -44,6 +51,10 @@ namespace WFLostNFurious
         static Random rnd;
         static readonly int[][] matriceLabyrinthe;  //Matrice du labyrinthe
         static int compteurInstructionsEffectuees;
+
+
+
+        
         #endregion
 
         //Champs
@@ -67,6 +78,7 @@ namespace WFLostNFurious
         /// <summary>
         /// Tableau qui contient le schema du labyrithe
         /// </summary>
+        /// la clé est MatriceLabyrinthe et la valeur c'est matriceLabyrinthe
         public static int[][] MatriceLabyrinthe => matriceLabyrinthe;
         /// <summary>
         /// Nombre d'instructions effectuee par le personnage
@@ -81,6 +93,8 @@ namespace WFLostNFurious
             EstEnMouvement = false;
             ArriveeDemandee = new Arrivee();
             Rnd = new Random();
+            
+            //la longeur du labyrinthe donc ce double tableau qui contient des tableaux
             matriceLabyrinthe = new int[][] {
                 new int[] { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 },
                 new int[] { 4, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 4 },
@@ -130,23 +144,64 @@ namespace WFLostNFurious
         /// </summary>
         /// <param name="url">Url du serveur</param>
         /// <returns>Le code si connexion reussie, F sinon</returns>
-        static public string RecevoirInfos(string url)
+        /// 
+
+
+
+
+        //-------------------------------------
+
+
+        //Ancien code mais il manque la base de donnée
+        /*  static public string RecevoirInfos(string url)
+          {
+              string code = "";  //La pour le debuggage
+              try
+              {
+                  using (WebClient client = new WebClient())
+                  {
+                      code = client.DownloadString(new Uri(url));
+                      return code;
+                  }
+              }
+              catch (WebException e)
+              {
+                  Debug.WriteLine(e.ToString());
+                  return Jeu.CODE_DE_BASE;
+              }
+          } */
+
+
+
+
+
+        //---------------------------------------
+        static public string RecupDate()
         {
-            string code = "";  //La pour le debuggage
-            try
+            var DateAndTime = DateTime.Now;
+            var Date = DateAndTime.Date.ToString("yyyy-MM-dd");
+            return Date;
+        }
+
+
+        static public string RecevoirInfos()
+        {
+            
+           // var Calendrier = new Dictionary<string, string> { { "2021-09-15", "A" }, { "2021-09-16", "D" }, /* etc */};
+           /* foreach (var item in Calendrier)
             {
-                using (WebClient client = new WebClient())
+                if (RecupDate() == item.Key)
                 {
-                    code = client.DownloadString(new Uri(url));
-                    return code;
+                    return item.Value;
                 }
             }
-            catch (WebException e)
-            {
-                Debug.WriteLine(e.ToString());
-                return Jeu.CODE_DE_BASE;
-            }
-        } 
+            return null;*/
+           
+           return CODE_DE_BASE;
+
+        }
+
+
         #endregion
     }
 }
